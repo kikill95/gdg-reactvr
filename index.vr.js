@@ -20,6 +20,7 @@ export default class gdgReactVr extends React.Component {
     this.renderEnemies = this.renderEnemies.bind(this)
     this.startAudio = this.startAudio.bind(this)
     this.addNewEnemy = this.addNewEnemy.bind(this)
+    this.removeEnemy = this.removeEnemy.bind(this)
 
     setTimeout(this.addNewEnemy, 1000)
   }
@@ -42,11 +43,21 @@ export default class gdgReactVr extends React.Component {
     })
   }
 
+  removeEnemy (index) {
+    this.setState({
+      enemies: this.state.enemies.slice(0, index).concat(this.state.enemies.slice(index + 1))
+    })
+  }
+
   renderEnemies () {
     return (this.state.enemies.map((enemy, index) => {
       return (
         <VrButton
           key={index}
+          onClick={() => this.removeEnemy(index)}
+          onClickSound={{
+           mp3: asset('blaster.mp3'),
+          }}
           style={{
             width: 1,
             height: 1,
