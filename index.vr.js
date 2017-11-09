@@ -4,7 +4,7 @@ import {
   asset,
   Pano,
   View,
-  Sphere,
+  VrButton,
   Sound
 } from 'react-vr'
 
@@ -33,8 +33,8 @@ export default class gdgReactVr extends React.Component {
   addNewEnemy () {
     this.setState({
       enemies: this.state.enemies.concat([{
-        x: Math.random() * 100 - 50,
-        y: Math.random() * 40 - 20,
+        x: Math.random() * 20 - 10,
+        y: Math.random() * 20 - 10,
         z: (this.state.enemies.length % 2 ? 1 : -1) * (Math.random() * 13 + 7)
       }])
     }, () => {
@@ -45,20 +45,19 @@ export default class gdgReactVr extends React.Component {
   renderEnemies () {
     return (this.state.enemies.map((enemy, index) => {
       return (
-        <Sphere
+        <VrButton
           key={index}
-          radius={1}
-          widthSegments={50}
-          heightSegments={50}
           style={{
-            color: 'red',
-            transform: [{
-              translate: [enemy.x, enemy.y, enemy.z],
-              rotateX: enemy.x,
-              rotateY: enemy.y
-            }]
+            width: 1,
+            height: 1,
+            backgroundColor: 'red',
+            transform: [
+              {translate: [enemy.x, enemy.y, enemy.z]},
+              {rotateX: -Math.atan(enemy.y / enemy.z) + 'rad'},
+              {rotateY: Math.atan(enemy.x / enemy.z) + 'rad'}
+            ]
           }}
-        />
+        ></VrButton>
       )
     }))
   }
