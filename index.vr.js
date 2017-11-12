@@ -5,6 +5,7 @@ import {
   Pano,
   View,
   VrButton,
+  Model,
   Sound
 } from 'react-vr'
 
@@ -36,7 +37,7 @@ export default class gdgReactVr extends React.Component {
       enemies: this.state.enemies.concat([{
         x: Math.random() * 20 - 10,
         y: Math.random() * 20 - 10,
-        z: (this.state.enemies.length % 2 ? 1 : -1) * (Math.random() * 13 + 7)
+        z: (this.state.enemies.length % 2 ? 1 : -1) * (Math.random() * 6 + 4)
       }])
     }, () => {
       setTimeout(this.addNewEnemy, 2000)
@@ -52,23 +53,36 @@ export default class gdgReactVr extends React.Component {
   renderEnemies () {
     return (this.state.enemies.map((enemy, index) => {
       return (
-        <VrButton
+        <Model
           key={index}
-          onClick={() => this.removeEnemy(index)}
-          onClickSound={{
-           mp3: asset('blaster.mp3'),
+          source={{
+            obj: asset('death-star.obj'),
           }}
+          texture={asset('death-star.png')}
+          wireframe={false}
           style={{
-            width: 1,
-            height: 1,
-            backgroundColor: 'red',
             transform: [
               {translate: [enemy.x, enemy.y, enemy.z]},
               {rotateX: -Math.atan(enemy.y / enemy.z) + 'rad'},
-              {rotateY: Math.atan(enemy.x / enemy.z) + 'rad'}
+              {rotateY: Math.atan(enemy.x / enemy.z) + 1.91 + 'rad'}
             ]
           }}
-        ></VrButton>
+        >
+          <VrButton
+            onClick={() => this.removeEnemy(index)}
+            onClickSound={{
+             mp3: asset('blaster.mp3'),
+            }}
+            style={{
+              width: 1,
+              height: 1,
+              transform: [
+                {translate: [enemy.z > 0 ? 1.15 : -1.15, 0, enemy.z > 0 ? 0.5 : -0.5]},
+                {rotateY: -1.91 + 'rad'}
+              ]
+            }}
+          ></VrButton>
+        </Model>
       )
     }))
   }
