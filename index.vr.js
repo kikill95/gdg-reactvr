@@ -1,4 +1,5 @@
 import React from 'react'
+import Location from 'Location'
 import {
   AppRegistry,
   asset,
@@ -74,6 +75,7 @@ export default class gdgReactVr extends React.Component {
     }, () => {
       if (this.state.enemies.find(enemy => Math.abs(enemy.x) < 1 && Math.abs(enemy.y) < 1 && Math.abs(enemy.z) < 1)) {
         console.log('You died')
+        Location.reload()
         return
       }
       setTimeout(this.moveEnemies, timeout)
@@ -114,7 +116,6 @@ export default class gdgReactVr extends React.Component {
               style={{
                 width: 1.25,
                 height: 1.25,
-                backgroundColor: 'red',
                 transform: [
                   {translate: [enemy.z > 0 ? 1.25 : -1.25, 0, enemy.z > 0 ? 0.5 : -0.5]},
                   {rotateY: -1.91 + 'rad'}
