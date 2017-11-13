@@ -9,6 +9,8 @@ import {
   Sound
 } from 'react-vr'
 
+const timeout = 1000
+
 export default class gdgReactVr extends React.Component {
   constructor (props) {
     super(props)
@@ -22,8 +24,10 @@ export default class gdgReactVr extends React.Component {
     this.startAudio = this.startAudio.bind(this)
     this.addNewEnemy = this.addNewEnemy.bind(this)
     this.removeEnemy = this.removeEnemy.bind(this)
+    this.moveEnemies = this.moveEnemies.bind(this)
 
-    setTimeout(this.addNewEnemy, 1000)
+    setTimeout(this.addNewEnemy, timeout)
+    setTimeout(this.moveEnemies, 2 * timeout)
   }
 
   startAudio (event) {
@@ -40,7 +44,24 @@ export default class gdgReactVr extends React.Component {
         z: (this.state.enemies.length % 2 ? 1 : -1) * (Math.random() * 6 + 4)
       }])
     }, () => {
-      setTimeout(this.addNewEnemy, 2000)
+      setTimeout(this.addNewEnemy, 2 * timeout)
+    })
+  }
+
+  moveEnemies () {
+    this.setState({
+      enemies: this.state.enemies.map(enemy => {
+        enemy.x += enemy.x > 0 ? -0.5 : 0.5
+        enemy.y += enemy.y > 0 ? -0.5 : 0.5
+        enemy.z += enemy.z > 0 ? -0.5 : 0.5
+        return enemy
+      })
+    }, () => {
+      if (this.state.enemies.find(enemy => Math.abs(enemy.x) < 1 && Math.abs(enemy.y) < 1 && Math.abs(enemy.z) < 1)) {
+        console.log('You died')
+        return
+      }
+      setTimeout(this.moveEnemies, timeout)
     })
   }
 
