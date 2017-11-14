@@ -75,7 +75,7 @@ export default class gdgReactVr extends React.Component {
     }, () => {
       if (this.state.enemies.find(enemy => Math.abs(enemy.x) < 1 && Math.abs(enemy.y) < 1 && Math.abs(enemy.z) < 1)) {
         console.log('You died')
-        Location.reload()
+        setTimeout(Location.reload, 1000)
         return
       }
       setTimeout(this.moveEnemies, timeout)
