@@ -47,7 +47,7 @@ export default class gdgReactVr extends React.Component {
     enemy.animX = new Animated.Value(enemy.x)
     enemy.rotateX = new Animated.Value(-Math.atan(enemy.y / enemy.z) + 'rad')
     enemy.animY = new Animated.Value(enemy.y)
-    enemy.rotateY = new Animated.Value(Math.atan(enemy.x / enemy.z) + 1.91 + 'rad')
+    enemy.rotateY = new Animated.Value(Math.atan(enemy.x / enemy.z) + (enemy.z > 0 ? -1.23 : 1.91) + 'rad')
     enemy.animZ = new Animated.Value(enemy.z)
 
     this.setState({
@@ -67,7 +67,7 @@ export default class gdgReactVr extends React.Component {
           Animated.timing(enemy.animX, {toValue: enemy.x}),
           Animated.timing(enemy.rotateX, {toValue: -Math.atan(enemy.y / enemy.z) + 'rad'}),
           Animated.timing(enemy.animY, {toValue: enemy.y}),
-          Animated.timing(enemy.rotateY, {toValue: Math.atan(enemy.x / enemy.z) + 1.91 + 'rad'}),
+          Animated.timing(enemy.rotateY, {toValue: Math.atan(enemy.x / enemy.z) + (enemy.z > 0 ? -1.23 : 1.91) + 'rad'}),
           Animated.timing(enemy.animZ, {toValue: enemy.z})
         ]).start()
         return enemy
