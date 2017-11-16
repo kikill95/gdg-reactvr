@@ -75,7 +75,7 @@ export default class gdgReactVr extends React.Component {
     }, () => {
       if (this.state.enemies.find(enemy => Math.abs(enemy.x) < 1 && Math.abs(enemy.y) < 1 && Math.abs(enemy.z) < 1)) {
         console.log('You died')
-        setTimeout(Location.reload, 1000)
+        setTimeout(Location.reload, 5000)
         return
       }
       setTimeout(this.moveEnemies, timeout)
@@ -113,6 +113,10 @@ export default class gdgReactVr extends React.Component {
               onClickSound={{
                mp3: asset('blaster.mp3'),
               }}
+              onEnter={() => this.removeEnemy(index)}
+              onEnterSound={{
+               mp3: asset('blaster.mp3'),
+              }}
               style={{
                 width: 1.25,
                 height: 1.25,
@@ -133,7 +137,8 @@ export default class gdgReactVr extends React.Component {
       <View>
         <Sound
           source={{
-            mp3: asset('audio.mp3')
+            mp3: asset('audio.mp3'),
+            ogg: asset('audio.ogg')
           }}
           loop
           playControl={this.state.isAudioReady ? 'play' : 'stop'}

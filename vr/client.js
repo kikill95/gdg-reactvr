@@ -4,10 +4,14 @@
 
 // Auto-generated content.
 import {VRInstance} from 'react-vr-web'
+import * as SimpleRaycaster from 'simple-raycaster'
 
 function init (bundle, parent, options) {
   const vr = new VRInstance(bundle, 'gdg_reactvr', parent, {
-    // Add custom options here
+    raycasters: [
+      SimpleRaycaster // Add SimpleRaycaster to the options
+    ],
+    cursorVisibility: 'visible', // Add cursorVisibility
     ...options
   })
   vr.render = function () {
