@@ -1,5 +1,5 @@
-# gdg-reactvr
-Simple demo of ReactVR for GDG's React'ive Saturday
+# reactvr
+Simple demo of ReactVR
 
 ### Setup
 

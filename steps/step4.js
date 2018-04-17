@@ -1,7 +1,6 @@
-// animate
+// audio and its events
 
 import React from 'react'
-import Location from 'Location'
 import {
   AppRegistry,
   asset,
@@ -9,8 +8,7 @@ import {
   View,
   VrButton,
   Model,
-  Sound,
-  Animated
+  Sound
 } from 'react-vr'
 
 const timeout = 1000
@@ -28,10 +26,8 @@ export default class gdgReactVr extends React.Component {
     this.startAudio = this.startAudio.bind(this)
     this.addNewEnemy = this.addNewEnemy.bind(this)
     this.removeEnemy = this.removeEnemy.bind(this)
-    this.moveEnemies = this.moveEnemies.bind(this)
 
     setTimeout(this.addNewEnemy, timeout)
-    setTimeout(this.moveEnemies, 2 * timeout)
   }
 
   startAudio (event) {
@@ -46,41 +42,11 @@ export default class gdgReactVr extends React.Component {
       y: Math.random() * 20 - 10,
       z: (this.state.enemies.length % 2 ? 1 : -1) * (Math.random() * 6 + 4)
     }
-    enemy.animX = new Animated.Value(enemy.x)
-    enemy.rotateX = new Animated.Value(-Math.atan(enemy.y / enemy.z) + 'rad')
-    enemy.animY = new Animated.Value(enemy.y)
-    enemy.rotateY = new Animated.Value(Math.atan(enemy.x / enemy.z) + (enemy.z > 0 ? -1.23 : 1.91) + 'rad')
-    enemy.animZ = new Animated.Value(enemy.z)
 
     this.setState({
       enemies: this.state.enemies.concat([enemy])
     }, () => {
       setTimeout(this.addNewEnemy, 2 * timeout)
-    })
-  }
-
-  moveEnemies () {
-    this.setState({
-      enemies: this.state.enemies.map(enemy => {
-        enemy.x += enemy.x > 0 ? -0.5 : 0.5
-        enemy.y += enemy.y > 0 ? -0.5 : 0.5
-        enemy.z += enemy.z > 0 ? -0.5 : 0.5
-        Animated.parallel([
-          Animated.timing(enemy.animX, {toValue: enemy.x}),
-          Animated.timing(enemy.rotateX, {toValue: -Math.atan(enemy.y / enemy.z) + 'rad'}),
-          Animated.timing(enemy.animY, {toValue: enemy.y}),
-          Animated.timing(enemy.rotateY, {toValue: Math.atan(enemy.x / enemy.z) + (enemy.z > 0 ? -1.23 : 1.91) + 'rad'}),
-          Animated.timing(enemy.animZ, {toValue: enemy.z})
-        ]).start()
-        return enemy
-      })
-    }, () => {
-      if (this.state.enemies.find(enemy => Math.abs(enemy.x) < 1 && Math.abs(enemy.y) < 1 && Math.abs(enemy.z) < 1)) {
-        console.log('You died')
-        setTimeout(Location.reload, 2000)
-        return
-      }
-      setTimeout(this.moveEnemies, timeout)
     })
   }
 
@@ -93,13 +59,11 @@ export default class gdgReactVr extends React.Component {
   renderEnemies () {
     return (this.state.enemies.map((enemy, index) => {
       return (
-        <Animated.View
+        <View
           key={index}
           style={{
             transform: [
-              {translate: [enemy.animX, enemy.animY, enemy.animZ]},
-              {rotateX: enemy.rotateX},
-              {rotateY: enemy.rotateY}
+              {translate: [enemy.x, enemy.y, enemy.z]}
             ]
           }}
         >
@@ -112,11 +76,11 @@ export default class gdgReactVr extends React.Component {
             <VrButton
               onClick={() => this.removeEnemy(index)}
               onClickSound={{
-               mp3: asset('blaster.mp3')
+                mp3: asset('blaster.mp3'),
               }}
               onEnter={() => this.removeEnemy(index)}
               onEnterSound={{
-               mp3: asset('blaster.mp3')
+                mp3: asset('blaster.mp3'),
               }}
               style={{
                 width: 1.25,
@@ -128,7 +92,7 @@ export default class gdgReactVr extends React.Component {
               }}
             ></VrButton>
           </Model>
-        </Animated.View>
+        </View>
       )
     }))
   }
