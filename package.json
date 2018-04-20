@@ -7,7 +7,10 @@
     "bundle": "node node_modules/react-vr/scripts/bundle.js",
     "open": "node -e \"require('xopen')('http://localhost:8081/vr/')\"",
     "devtools": "react-devtools",
-    "test": "jest"
+    "test": "jest",
+    "predeploy": "rm -rf ./dist/ && mkdir dist && cp ./index.html ./dist/index.html && cp -r ./vr/build ./dist/build && cp -r ./static_assets ./dist/static_assets",
+    "deploy": "gh-pages -d ./dist",
+    "publish": "run-s bundle predeploy deploy"
   },
   "dependencies": {
     "ovrui": "~2.0.0",
@@ -21,7 +24,9 @@
   "devDependencies": {
     "babel-jest": "^19.0.0",
     "babel-preset-react-native": "^1.9.1",
+    "gh-pages": "^1.1.0",
     "jest": "^19.0.2",
+    "npm-run-all": "^4.1.2",
     "react-devtools": "^2.5.2",
     "react-test-renderer": "16.0.0",
     "xopen": "1.0.0"

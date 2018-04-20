@@ -77,7 +77,7 @@ export default class gdgReactVr extends React.Component {
     }, () => {
       if (this.state.enemies.find(enemy => Math.abs(enemy.x) < 1 && Math.abs(enemy.y) < 1 && Math.abs(enemy.z) < 1)) {
         console.log('You died')
-        setTimeout(Location.reload, 2000)
+        setTimeout(Location.reload, 4000)
         return
       }
       setTimeout(this.moveEnemies, timeout)
@@ -138,8 +138,8 @@ export default class gdgReactVr extends React.Component {
       <View>
         <Sound
           source={{
-            mp3: asset('audio.mp3'),
-            ogg: asset('audio.ogg')
+            // mp3: asset('audio.mp3'),
+            // ogg: asset('audio.ogg')
           }}
           loop
           playControl={this.state.isAudioReady ? 'play' : 'stop'}
