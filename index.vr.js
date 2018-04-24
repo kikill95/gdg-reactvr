@@ -1,5 +1,3 @@
-// animate
-
 import React from 'react'
 import Location from 'Location'
 import {
@@ -138,8 +136,8 @@ export default class gdgReactVr extends React.Component {
       <View>
         <Sound
           source={{
-            // mp3: asset('audio.mp3'),
-            // ogg: asset('audio.ogg')
+            mp3: asset('audio.mp3'),
+            ogg: asset('audio.ogg')
           }}
           loop
           playControl={this.state.isAudioReady ? 'play' : 'stop'}
